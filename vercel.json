@@ -1,0 +1,24 @@
+{
+  "name": "deriv-trading-bot",
+  "version": 2,
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "dist"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ],
+  "env": {
+    "VITE_DERIV_TOKEN": "bbI0jJHJLY6EPxM",
+    "VITE_DERIV_APP_ID": "36561",
+    "VITE_TRADING_MODE": "demo"
+  }
+}

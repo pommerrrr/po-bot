@@ -1,135 +1,132 @@
-# Scout Vite Template
+# 🤖 Deriv Trading Bot
 
-This is a [Vite](https://vite.dev) project bootstrapped with React + TypeScript and configured with TailwindCSS v4 and ShadCN UI.
+Bot automatizado de trading para a plataforma Deriv com análises técnicas e machine learning.
 
-## Getting Started
+## ✨ Características Principais
 
-First, run the development server:
+- 🔗 **API da Deriv**: Integração direta via WebSocket
+- 🧠 **Machine Learning**: Análises inteligentes para previsões
+- 📊 **Análise Técnica**: RSI, MACD, SMA, EMA
+- 🎯 **Stop Loss/Win**: Gerenciamento automático de risco
+- 🧪 **Modo Demo**: Teste sem riscos
+- 💰 **Modo Real**: Trading com dinheiro real
+- 📱 **Interface Web**: Dashboard completo e responsivo
 
+## 🚀 Como Usar
+
+### 1. Configuração
+- Token da Deriv já configurado: `bbI0jJHJLY6EPxM`
+- Escolha entre modo Demo ou Real
+- Configure valores de Stop Loss/Win
+- Defina valor das entradas
+
+### 2. Execução
 ```bash
-bun dev
+npm install
+npm run dev
 ```
 
-Open [http://localhost:5173](http://localhost:5173) with your browser to see the result.
+### 3. Acesso
+Abra http://localhost:5173 no navegador
 
-You can start editing the page by modifying `src/App.tsx`. The page auto-updates as you edit the file.
+## ⚙️ Configurações Recomendadas
 
-## Project Configuration
+### Para Iniciantes (Modo Demo)
+- Stop Loss: 80%
+- Stop Win: 85%
+- Valor Entrada: $10
+- Max Trades/Dia: 10
 
-### Package Management
+### Para Experientes (Modo Real)
+- Stop Loss: 70%
+- Stop Win: 90%
+- Valor Entrada: $25+
+- Max Trades/Dia: 20
 
-This project uses [Bun](https://bun.sh/) as the package manager:
+## 📊 Indicadores Técnicos
 
-- Install dependencies: `bun add <package-name>`
-- Run scripts: `bun <script-name>`
-- Manage dev dependencies: `bun add -d <package-name>`
+- **RSI**: Relative Strength Index (30-70)
+- **MACD**: Moving Average Convergence Divergence
+- **SMA**: Simple Moving Average (20 períodos)
+- **EMA**: Exponential Moving Average (12 períodos)
 
-### Theme Customization
+## 🧠 Machine Learning
 
-The project uses Tailwind CSS V4 with a theme defined in:
+O bot usa algoritmos de aprendizado para:
+- Analisar padrões históricos
+- Calcular probabilidades de sucesso
+- Adaptar estratégias baseadas em resultados
+- Otimizar pontos de entrada/saída
 
-- `src/index.css` - For CSS variables including colors in OKLCH format and custom theming
-- Tailwind V4 uses the new `@theme` directive for configuration
+## ⚠️ Avisos Importantes
 
-### ShadCN UI Components
+### Modo Demo
+- ✅ Sem riscos financeiros
+- ✅ Teste todas as configurações
+- ✅ Aprenda como funciona
+- ✅ Validação de estratégias
 
-This project uses [ShadCN UI](https://ui.shadcn.com) for styled components. The components are incorporated directly into the codebase (not as dependencies), making them fully customizable. All components have been installed:
+### Modo Real
+- ⚠️ **RISCO REAL**: Pode perder dinheiro
+- ⚠️ **TESTE ANTES**: Use modo demo extensivamente
+- ⚠️ **INVISTA CONSCIENTEMENTE**: Apenas o que pode perder
+- ⚠️ **ACOMPANHE**: Monitor os resultados constantemente
 
-- accordion
-- alert-dialog
-- alert
-- aspect-ratio
-- avatar
-- badge
-- breadcrumb
-- button
-- calendar
-- card
-- carousel
-- chart
-- checkbox
-- collapsible
-- command
-- context-menu
-- dialog
-- drawer
-- dropdown-menu
-- form
-- hover-card
-- input-otp
-- input
-- label
-- menubar
-- navigation-menu
-- pagination
-- popover
-- progress
-- radio-group
-- scroll-area
-- select
-- separator
-- sheet
-- skeleton
-- slider
-- sonner
-- switch
-- table
-- tabs
-- textarea
-- toast
-- toggle-group
-- toggle
+## 🔧 Estrutura do Projeto
 
-### Icon Library
-
-[Lucide React](https://lucide.dev/) is the preferred icon library for this project, as specified in components.json. Always use Lucide icons to maintain consistency:
-
-```tsx
-import { ArrowRight } from "lucide-react";
-
-// Use in components
-<Button>
-  <span>Click me</span>
-  <ArrowRight />
-</Button>;
+```
+deriv-trading-bot/
+├── src/
+│   ├── App.tsx          # Componente principal do bot
+│   ├── main.tsx         # Ponto de entrada React
+│   └── index.css        # Estilos Tailwind + custom
+├── package.json         # Dependências e scripts
+├── vite.config.ts       # Configuração Vite
+├── tailwind.config.js   # Configuração Tailwind
+└── README.md           # Este arquivo
 ```
 
-### Font Configuration
+## 🌐 API da Deriv
 
-This project uses Google Fonts with:
+- **WebSocket**: `wss://ws.binaryws.com/websockets/v3`
+- **App ID**: `36561`
+- **Token**: Configurado automaticamente
+- **Símbolos**: R_50, R_75, R_100 (Índices Sintéticos)
 
-- Inter (sans-serif)
-- Playfair Display (serif)
+## 📈 Estratégias Suportadas
 
-The font is imported via Google Fonts CDN in `src/index.css` and configured in the Tailwind theme:
+1. **Análise de Tendência**
+   - MACD Crossover
+   - SMA/EMA Signals
 
-```css
-@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap");
+2. **Momentum**
+   - RSI Oversold/Overbought
+   - Price Action Patterns
 
-@theme inline {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-serif: "Playfair Display", ui-serif, Georgia, serif;
-}
-```
+3. **Reversal**
+   - Support/Resistance Levels
+   - Bollinger Bands (implementação futura)
 
-To change or update fonts:
+## 🔮 Recursos Futuros
 
-1. Update the Google Fonts import in `src/index.css`
-2. Modify the `--font-sans` variable in the `@theme` directive
+- [ ] Mais indicadores técnicos
+- [ ] Estratégias customizáveis
+- [ ] Backtesting histórico
+- [ ] Alertas por Telegram/WhatsApp
+- [ ] Multi-símbolo trading
+- [ ] Copy trading
 
-## Build and Deploy
+## 📞 Suporte
 
-Build the project:
+- **Deriv API Docs**: https://api.deriv.com/
+- **WebSocket API**: https://developers.deriv.com/
+- **Comunidade**: https://community.deriv.com/
 
-```bash
-bun run build
-```
+## ⚖️ Disclaimer
 
-Preview the production build:
+Este bot é para fins educacionais e de automação. Trading envolve riscos significativos. 
+Sempre teste em modo demo antes de usar dinheiro real. O desenvolvedor não se responsabiliza por perdas financeiras.
 
-```bash
-bun run preview
-```
+---
 
-The built files will be in the `dist` directory, ready for deployment to any static hosting service.
+**🎯 Desenvolvido especificamente para brasileiros que usam a Deriv!**
