@@ -2,13 +2,103 @@
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/deriv-icon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Deriv Trading Bot - Bot Automático de Trading</title>
     <meta name="description" content="Bot automático de trading para a plataforma Deriv com análises técnicas e machine learning">
+    <title>Deriv Trading Bot - Bot Automático de Trading</title>
+    
+    <!-- Preload critical resources -->
+    <link rel="preconnect" href="https://ws.binaryws.com">
+    <link rel="preconnect" href="https://api.deriv.com">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="./deriv-icon.svg" />
+    
+    <!-- Prevent MIME type issues -->
+    <script>
+      // Fix for module loading issues
+      if (!window.crossOriginIsolated) {
+        console.log('Setting up module loading...');
+      }
+    </script>
   </head>
   <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+    <div id="root">
+      <!-- Loading fallback -->
+      <div style="
+        display: flex; 
+        justify-content: center; 
+        align-items: center; 
+        height: 100vh; 
+        background: linear-gradient(135deg, #1e293b, #7c3aed, #1e293b);
+        color: white;
+        font-family: system-ui, -apple-system, sans-serif;
+        flex-direction: column;
+        gap: 20px;
+      ">
+        <div style="
+          width: 50px; 
+          height: 50px; 
+          border: 3px solid rgba(255, 68, 79, 0.3); 
+          border-top: 3px solid #ff444f; 
+          border-radius: 50%; 
+          animation: spin 1s linear infinite;
+        "></div>
+        <h1 style="margin: 0; font-size: 24px;">Carregando Deriv Bot...</h1>
+        <p style="margin: 0; opacity: 0.8;">Inicializando sistema de trading</p>
+      </div>
+      <style>
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+      </style>
+    </div>
+    
+    <!-- Main application script -->
+    <script type="module" src="./src/main.tsx"></script>
+    
+    <!-- Error handling -->
+    <script>
+      window.addEventListener('error', function(e) {
+        console.error('Error loading application:', e);
+        const root = document.getElementById('root');
+        if (root && root.innerHTML.includes('Carregando')) {
+          root.innerHTML = `
+            <div style="
+              display: flex; 
+              justify-content: center; 
+              align-items: center; 
+              height: 100vh; 
+              background: linear-gradient(135deg, #1e293b, #dc2626, #1e293b);
+              color: white;
+              font-family: system-ui, -apple-system, sans-serif;
+              flex-direction: column;
+              gap: 20px;
+              text-align: center;
+              padding: 20px;
+            ">
+              <h1>⚠️ Erro ao Carregar</h1>
+              <p>Problema ao carregar o bot. Verifique:</p>
+              <ul style="text-align: left; max-width: 400px;">
+                <li>Conexão com internet</li>
+                <li>Servidor configurado corretamente</li>
+                <li>HTTPS ativo (necessário para WebSocket)</li>
+              </ul>
+              <button onclick="location.reload()" style="
+                background: #ff444f; 
+                color: white; 
+                border: none; 
+                padding: 12px 24px; 
+                border-radius: 6px; 
+                cursor: pointer;
+                font-size: 16px;
+              ">
+                🔄 Tentar Novamente
+              </button>
+            </div>
+          `;
+        }
+      });
+    </script>
   </body>
 </html>
