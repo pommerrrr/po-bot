@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 
 // Tipos de dados
 interface Trade {
@@ -36,24 +36,12 @@ interface Settings {
   token: string;
 }
 
-interface BuyResult {
-  success: boolean;
-  id: string;
-  entryPrice: number;
-}
-
-interface APIMessage {
-  msg_type?: string;
-  balance?: { balance: number };
-  buy?: { contract_id: string; start_spot: number };
-}
-
 // API da Deriv
 class DerivAPI {
   private ws: WebSocket | null = null;
   private token: string;
   private isConnected: boolean = false;
-  private callbacks: Map<string, (data: APIMessage) => void> = new Map();
+  private callbacks: Map<string, Function> = new Map();
 
   constructor(token: string) {
     this.token = token;
@@ -76,7 +64,7 @@ class DerivAPI {
       };
 
       this.ws.onmessage = (event) => {
-        const data: APIMessage = JSON.parse(event.data);
+        const data = JSON.parse(event.data);
         console.log('📥 Mensagem recebida:', data);
         
         if (data.msg_type && this.callbacks.has(data.msg_type)) {
@@ -103,13 +91,13 @@ class DerivAPI {
     }
   }
 
-  subscribe(msgType: string, callback: (data: APIMessage) => void) {
+  subscribe(msgType: string, callback: Function) {
     this.callbacks.set(msgType, callback);
   }
 
   async getBalance(): Promise<number> {
     return new Promise((resolve) => {
-      this.subscribe('balance', (data: APIMessage) => {
+      this.subscribe('balance', (data: any) => {
         if (data.balance) {
           resolve(data.balance.balance);
         }
@@ -122,9 +110,9 @@ class DerivAPI {
     });
   }
 
-  async buyContract(symbol: string, direction: 'CALL' | 'PUT', amount: number, duration: number): Promise<BuyResult> {
+  async buyContract(symbol: string, direction: 'CALL' | 'PUT', amount: number, duration: number) {
     return new Promise((resolve) => {
-      this.subscribe('buy', (data: APIMessage) => {
+      this.subscribe('buy', (data: any) => {
         if (data.buy) {
           resolve({
             id: data.buy.contract_id,
@@ -149,8 +137,8 @@ class DerivAPI {
   }
 
   async getTicks(symbol: string) {
-    this.subscribe('tick', () => {
-      // Handle tick data - callback sem parâmetro não utilizado
+    this.subscribe('tick', (data: any) => {
+      // Handle tick data
     });
 
     this.send({
@@ -341,7 +329,7 @@ export default function DerivTradingBot() {
       setCurrentPrice(price);
       
       // Simular histórico de preços
-      const prices = Array.from({ length: 50 }, () => price + Math.random() * 10 - 5);
+      const prices = Array.from({ length: 50 }, (_, i) => price + Math.random() * 10 - 5);
       const newIndicators = calculateIndicators(prices);
       setIndicators(newIndicators);
       
@@ -533,7 +521,7 @@ export default function DerivTradingBot() {
               <input
                 type="number"
                 value={settings.stopLoss}
-                onChange={(e) => setSettings((prev: Settings) => ({ ...prev, stopLoss: Number(e.target.value) }))}
+                onChange={(e) => setSettings(prev => ({ ...prev, stopLoss: Number(e.target.value) }))}
                 className="w-full bg-slate-700 border border-slate-600 rounded px-3 py-2"
               />
             </div>
@@ -542,7 +530,7 @@ export default function DerivTradingBot() {
               <input
                 type="number"
                 value={settings.stopWin}
-                onChange={(e) => setSettings((prev: Settings) => ({ ...prev, stopWin: Number(e.target.value) }))}
+                onChange={(e) => setSettings(prev => ({ ...prev, stopWin: Number(e.target.value) }))}
                 className="w-full bg-slate-700 border border-slate-600 rounded px-3 py-2"
               />
             </div>
@@ -551,7 +539,7 @@ export default function DerivTradingBot() {
               <input
                 type="number"
                 value={settings.entryAmount}
-                onChange={(e) => setSettings((prev: Settings) => ({ ...prev, entryAmount: Number(e.target.value) }))}
+                onChange={(e) => setSettings(prev => ({ ...prev, entryAmount: Number(e.target.value) }))}
                 className="w-full bg-slate-700 border border-slate-600 rounded px-3 py-2"
               />
             </div>
